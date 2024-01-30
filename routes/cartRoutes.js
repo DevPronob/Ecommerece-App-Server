@@ -3,7 +3,7 @@
 
 const express =require("express")
 const router =express.Router()
-const {setCategory,getCategory,updateCategory} = require('../controller/categoryControler')
+const {getCart} = require('../controller/cartController')
 const passport = require("passport")
 // const {
 //     verifyToken,
@@ -15,10 +15,11 @@ const passport = require("passport")
 // router.patch('/users/admin/:id',verifyToken, makeAdmin)
 // router.get('/users/admin/', makeAdmin)
 
+router.get('/list',getCart)
 
-router.post('/add',setCategory)
-router.get('/list',getCategory)
-router.put('/list/update/:id',updateCategory)
+// router.post('/add',setCategory)
+// router.get('/list',getCategory)
+// router.put('/list/update/:id',updateCategory)
 // router.post('/forgot-password',forgetPassword)
 // router.post('/reset-password/:token',resetPassword)
 // router.post('/login', passport.authenticate('local'), login)

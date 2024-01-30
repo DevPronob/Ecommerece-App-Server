@@ -49,6 +49,42 @@ const getCategory = async (req, res) => {
       }
 };
 
+const updateCategory = async (req, res) => {
+  const id = req.params.id;
+  const updateData = req.body;
+  try {
+    
+      const updateCategory = await Category.findByIdAndUpdate(id, updateData, {
+        new: true, // To return the updated document
+        runValidators: true,
+      });
+     return res.status(200).json({
+        message: "category updated successfully",
+        categories: updateCategory,
+      });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+
+const deleteCategory = async (req, res) => {
+  const id = req.params.id;
+  // const updateData = req.body;
+  try {
+    
+      const deleteCategory = await Category.findByIdAndDelete(id);
+     return res.status(200).json({
+        message: "category delete successfully",
+        categories: deleteCategory,
+      });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
 // try {
 //
 //   const newCategory = new Category({
@@ -66,4 +102,6 @@ const getCategory = async (req, res) => {
 module.exports = {
   setCategory,
   getCategory,
+  updateCategory,
+  deleteCategory
 };

@@ -1,6 +1,6 @@
 const express =require("express")
 const router =express.Router()
-const {setProduct,getProduct} = require('../controller/productController')
+const {setProduct,getProduct,getProductDetails,getProductDelete,updateProduct,SearchProductByName} = require('../controller/productController')
 const passport = require("passport")
 // const {
 //     verifyToken,
@@ -15,7 +15,10 @@ const passport = require("passport")
 
 router.post('/add',setProduct)
 router.get('/list',getProduct)
-
+router.get('/list/:id',getProductDetails)
+router.delete('/list/:id',getProductDelete)
+router.put('/list/update/:id',updateProduct)
+router.get('/list/search/:name',SearchProductByName)
 // router.post('/forgot-password',forgetPassword)
 // router.post('/reset-password/:token',resetPassword)
 // router.post('/login', passport.authenticate('local'), login)
