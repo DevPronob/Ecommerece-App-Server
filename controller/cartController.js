@@ -37,8 +37,9 @@ const Category = require("../models/categoryModel");
 // };
 
 const getCart = async (req, res) => {
+    const user =req.user?.email
     try {
-        const categories = "pronob"
+        const categories = user
        return res.status(200).json({
           message: "All categories found successfully",
           categories: categories,

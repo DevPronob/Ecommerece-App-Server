@@ -96,9 +96,15 @@ const setUser = async (req, res) => {
       email: email,
     });
     await newUser.save();
-    res
+    const jsontoken =jwt.sign({ email:newUser.email,admin:newUser.isAdmin }, "shhh", { expiresIn: '3d' })
+    console.log(jsontoken)
+    const userr={
+      newUser,
+      jsontoken
+    }
+    return res
       .status(201)
-      .json({ message: "User registered successfully", user: newUser });
+      .json({ message: "User registered successfully", user: userr});
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });

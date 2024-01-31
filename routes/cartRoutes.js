@@ -5,17 +5,17 @@ const express =require("express")
 const router =express.Router()
 const {getCart} = require('../controller/cartController')
 const passport = require("passport")
-// const {
-//     verifyToken,
-//     // verifyTokenAndAdmin
-//   } = require("./verifyToken");
+const {
+    verifyToken,
+    // verifyTokenAndAdmin
+  } = require("../utils/verifyToken");
 // router.post('/', setUser)
 // router.get('/users/admin/:email',verifyToken,getAdmin)
 // router.get('/',verifyToken, getAllUser)
 // router.patch('/users/admin/:id',verifyToken, makeAdmin)
 // router.get('/users/admin/', makeAdmin)
 
-router.get('/list',getCart)
+router.get('/list',verifyToken,getCart)
 
 // router.post('/add',setCategory)
 // router.get('/list',getCategory)
