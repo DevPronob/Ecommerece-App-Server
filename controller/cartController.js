@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-
+const store = require('../utils/store');
 // Bring in Models & Utils
 const Category = require("../models/categoryModel");
+const Cart = require("../models/cartModel");
 
 // const setCategory = async (req, res) => {
 //   const { name, image, isActive, slug, description } = req.body;
@@ -35,6 +36,28 @@ const Category = require("../models/categoryModel");
 // //     res.status(500).json({ message: "Internal Server Error" });
 // //   }
 // };
+
+
+const setCart = async (req, res) => {
+    const user =req.user?.email;
+    const items = req.body.products;
+    const products = store.caculateItemsSalesTax(items);
+   
+    try {
+        const cart =new Cart({
+            user,
+            products
+        })
+        const cartDoc = await cart.save();
+       return res.status(200).json({
+          message: "add to cart successfully",
+          cart: cartDoc,
+        });
+      } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Internal Server Error" });
+      }
+};
 
 const getCart = async (req, res) => {
     const user =req.user?.email
@@ -119,6 +142,7 @@ const getCart = async (req, res) => {
 module.exports = {
 //   setCategory,
 getCart,
+setCart
 //   updateCategory,
 //   deleteCategory,
 

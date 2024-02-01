@@ -3,7 +3,7 @@
 
 const express =require("express")
 const router =express.Router()
-const {getCart} = require('../controller/cartController')
+const {getCart,setCart} = require('../controller/cartController')
 const passport = require("passport")
 const {
     verifyToken,
@@ -16,6 +16,7 @@ const {
 // router.get('/users/admin/', makeAdmin)
 
 router.get('/list',verifyToken,getCart)
+router.post('/list',verifyToken,setCart)
 
 // router.post('/add',setCategory)
 // router.get('/list',getCategory)
