@@ -3,7 +3,7 @@
 
 const express =require("express")
 const router =express.Router()
-const {getCart,setCart} = require('../controller/cartController')
+const {getCartByEmail,setCart,deleteCartByEmail,deleteCartItem} = require('../controller/cartController')
 const passport = require("passport")
 const {
     verifyToken,
@@ -15,8 +15,10 @@ const {
 // router.patch('/users/admin/:id',verifyToken, makeAdmin)
 // router.get('/users/admin/', makeAdmin)
 
-router.get('/list',verifyToken,getCart)
-router.post('/list',verifyToken,setCart)
+router.get('/list',verifyToken,getCartByEmail)
+router.post('/add',verifyToken,setCart)
+router.delete('/list',verifyToken,deleteCartByEmail)
+router.delete('/list/delete',verifyToken,deleteCartItem)
 
 // router.post('/add',setCategory)
 // router.get('/list',getCategory)

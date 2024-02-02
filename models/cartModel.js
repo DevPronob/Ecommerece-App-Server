@@ -1,6 +1,7 @@
 const Mongoose = require('mongoose');
-
 const { CART_ITEM_STATUS } = require('../constants');
+
+// const { CART_ITEM_STATUS } = require('../constants');
 
 const { Schema } = Mongoose;
 
@@ -29,14 +30,14 @@ const CartItemSchema = new Schema({
   },
   status: {
     type: String,
-    default: CART_ITEM_STATUS.Not_processed,
-    enum: [
-      CART_ITEM_STATUS.Not_processed,
-      CART_ITEM_STATUS.Processing,
-      CART_ITEM_STATUS.Shipped,
-      CART_ITEM_STATUS.Delivered,
-      CART_ITEM_STATUS.Cancelled
-    ]
+    default: 'Not processed',
+    // enum: [
+    //   CART_ITEM_STATUS.Not_processed,
+    //   CART_ITEM_STATUS.Processing,
+    //   CART_ITEM_STATUS.Shipped,
+    //   CART_ITEM_STATUS.Delivered,
+    //   CART_ITEM_STATUS.Cancelled
+    // ]
   }
 });
 
@@ -46,7 +47,7 @@ module.exports = Mongoose.model('CartItem', CartItemSchema);
 const CartSchema = new Schema({
   products: [CartItemSchema],
   user: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: 'User'
   },
   updated: Date,
