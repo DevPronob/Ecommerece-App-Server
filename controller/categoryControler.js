@@ -18,12 +18,12 @@ const setCategory = async (req, res) => {
       description,
     });
     await newCategory.save();
-    res
+   return res
       .status(201)
-      .json({ message: "Category added successfully", category: newCategory });
+      .send({ message: "Category added successfully", category: newCategory });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal Server Error" });
+   return res.status(500).send({ message: "Internal Server Error" });
   }
 
 // try {
@@ -39,13 +39,13 @@ const setCategory = async (req, res) => {
 const getCategory = async (req, res) => {
     try {
         const categories = await Category.find({});
-       return res.status(200).json({
+       return res.status(200).send({
           message: "All categories found successfully",
           categories: categories,
         });
       } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: "Internal Server Error" });
+        return res.status(500).send({ message: "Internal Server Error" });
       }
 };
 
@@ -58,13 +58,13 @@ const updateCategory = async (req, res) => {
         new: true, // To return the updated document
         runValidators: true,
       });
-     return res.status(200).json({
+     return res.status(200).send({
         message: "category updated successfully",
         categories: updateCategory,
       });
     } catch (err) {
       console.error(err);
-      return res.status(500).json({ message: "Internal Server Error" });
+      return res.status(500).send({ message: "Internal Server Error" });
     }
 };
 
@@ -75,15 +75,31 @@ const deleteCategory = async (req, res) => {
   try {
     
       const deleteCategory = await Category.findByIdAndDelete(id);
-     return res.status(200).json({
+     return res.status(200).send({
         message: "category delete successfully",
         categories: deleteCategory,
       });
     } catch (err) {
       console.error(err);
-      return res.status(500).json({ message: "Internal Server Error" });
+      return res.status(500).send({ message: "Internal Server Error" });
     }
 };
+
+// const deleteCategory = async (req, res) => {
+//   const id = req.params.id;
+//   // const updateData = req.body;
+//   try {
+    
+//       const deleteCategory = await Category.findByIdAndDelete(id);
+//      return res.status(200).json({
+//         message: "category delete successfully",
+//         categories: deleteCategory,
+//       });
+//     } catch (err) {
+//       console.error(err);
+//       return res.status(500).json({ message: "Internal Server Error" });
+//     }
+// };
 
 // try {
 //
@@ -103,5 +119,6 @@ module.exports = {
   setCategory,
   getCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+
 };

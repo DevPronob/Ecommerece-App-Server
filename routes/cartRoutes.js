@@ -15,10 +15,10 @@ const {
 // router.patch('/users/admin/:id',verifyToken, makeAdmin)
 // router.get('/users/admin/', makeAdmin)
 
-router.get('/list',verifyToken,getCartByEmail)
-router.post('/add',verifyToken,setCart)
-router.delete('/list',verifyToken,deleteCartByEmail)
-router.delete('/list/delete',verifyToken,deleteCartItem)
+router.get('/list',getCartByEmail)
+router.post('/add/:id',setCart)
+router.delete('/list',deleteCartByEmail)
+router.delete('/list/delete',deleteCartItem)
 
 // router.post('/add',setCategory)
 // router.get('/list',getCategory)

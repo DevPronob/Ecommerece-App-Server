@@ -115,7 +115,7 @@ const getProduct = async (req, res) => {
   }
 
   const result = await Product.aggregate(aggregateQuery);
-  res.send(result);
+ return res.send(result);
 };
 const getProductDetails = async (req, res) => {
   const id = req.params.id;
@@ -124,63 +124,53 @@ const getProductDetails = async (req, res) => {
     const productDetail = await Product.findById(id);
     if (!productDetail) {
       // If no product is found with the given ID
-      return res
-        .status(404)
-        .json({
-          error: "Product not found",
-          message: "No product found with the provided ID.",
-        });
-    }
-    res.status(201).json(productDetail);
-  } catch (error) {
-    res
-      .status(500)
-      .json({
-        error: "Internal Server Error",
-        message:
-          "An unexpected error occurred while fetching the product details.",
+      return res.status(404).json({
+        error: "Product not found",
+        message: "No product found with the provided ID.",
       });
+    }
+   return res.status(201).json(productDetail);
+  } catch (error) {
+   return res.status(500).json({
+      error: "Internal Server Error",
+      message:
+        "An unexpected error occurred while fetching the product details.",
+    });
   }
 };
 
 const getProductDelete = async (req, res) => {
   const id = req.params.id;
-  console.log(id)
+  console.log(id);
   try {
     const DeletedProduct = await Product.findByIdAndDelete(id);
     if (!DeletedProduct) {
       // If no product is found with the given ID
-      return res
-        .status(404)
-        .json({
-          error: "Product not found",
-          message: "No product found with the provided ID.",
-        });
-    }
-    res.status(204).json(DeletedProduct);
-  } catch (error) {
-    res
-      .status(500)
-      .json({
-        error: "Internal Server Error",
-        message:
-          "An unexpected error occurred while fetching the product delete.",
+      return res.status(404).json({
+        error: "Product not found",
+        message: "No product found with the provided ID.",
       });
+    }
+   return res.status(204).json(DeletedProduct);
+  } catch (error) {
+   return res.status(500).json({
+      error: "Internal Server Error",
+      message:
+        "An unexpected error occurred while fetching the product delete.",
+    });
   }
 };
 
-
-
 const updateProduct = async (req, res) => {
-  const id=req.params.id;
+  const id = req.params.id;
   const updateData = req.body;
-  console.log(id,updateData,"updated document")
+  console.log(id, updateData, "updated document");
 
-  try{
-    const updatedProduct= await Product.findByIdAndUpdate(id,updateData,{
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(id, updateData, {
       new: true, // To return the updated document
       runValidators: true,
-    })
+    });
     if (!updatedProduct) {
       // If no product is found with the given ID
       return res.status(404).json({
@@ -188,53 +178,47 @@ const updateProduct = async (req, res) => {
         message: "No product found with the provided ID.",
       });
     }
-    res.status(201).json({
+   return res.status(201).json({
       message: "Product updated successfully",
       updatedProduct,
     });
-
-  }catch(error){
-    res
-      .status(500)
-      .json({
-        error: "Internal Server Error",
-        message:
-          "An unexpected error occurred while fetching the product update.",
-      });
-
+  } catch (error) {
+   return res.status(500).json({
+      error: "Internal Server Error",
+      message:
+        "An unexpected error occurred while fetching the product update.",
+    });
   }
-}
-
+};
 
 const SearchProductByName = async (req, res) => {
   try {
     const name = req.params.name;
-    console.log(name,"name")
+    console.log(name, "name");
     const findProduct = await Product.find(
-      { name: { $regex: new RegExp(name, 'i') } },
-    { name: 1, price: 1, featuredImage: 1, _id: 1 }
+      { name: { $regex: new RegExp(name, "i") } },
+      { name: 1, price: 1, featuredImage: 1, _id: 1 }
     );
-  
+
     if (findProduct.length === 0) {
       return res.status(404).json({
         error: "Product not found",
         message: "No product found with the provided name.",
       });
     }
-  
-    res.status(200).json({
+
+   return res.status(200).json({
       message: "Product found successfully",
       findProduct,
     });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({
+    console.error("Error:", error);
+    return res.status(500).json({
       error: "Internal Server Error",
       message: "An unexpected error occurred while fetching the product found.",
     });
   }
-}
-
+};
 
 //  const aggregateQuery = [
 //   {
@@ -404,5 +388,5 @@ module.exports = {
   getProductDetails,
   getProductDelete,
   updateProduct,
-  SearchProductByName
+  SearchProductByName,
 };

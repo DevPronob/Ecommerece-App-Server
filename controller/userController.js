@@ -107,12 +107,12 @@ const setUser = async (req, res) => {
       .json({ message: "User registered successfully", user: userr});
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal Server Error" });
+   return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
 const login = async (req, res) => {
-  res.json({ message: "Login successful", user: req.user });
+ return res.json({ message: "Login successful", user: req.user });
 };
 const resetPassword = async (req, res) => {
   const {token} =req.params;
@@ -138,10 +138,10 @@ const resetPassword = async (req, res) => {
   
     await user.save();
   
-    res.json({ message: 'Password reset successful.' });
+    return res.json({ message: 'Password reset successful.' });
   }catch(error){
     console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+   return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
 
@@ -176,7 +176,7 @@ const forgetPassword = async (req, res) => {
       subject: `Ecommerce Password Recovery`,
       message,
     });
-    res.status(200).json({
+   return res.status(200).json({
       success: true,
       message: `Email sent to ${user.email} successfully`,
     });
@@ -184,7 +184,7 @@ const forgetPassword = async (req, res) => {
     user.resetPasswordToken = undefined,
       user.resetPasswordExpires = undefined;
     console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+   return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 

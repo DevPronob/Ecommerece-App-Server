@@ -1,5 +1,5 @@
+const { default: mongoose } = require('mongoose');
 const Mongoose = require('mongoose');
-const { CART_ITEM_STATUS } = require('../constants');
 
 // const { CART_ITEM_STATUS } = require('../constants');
 
@@ -30,7 +30,7 @@ const CartItemSchema = new Schema({
   },
   status: {
     type: String,
-    default: 'Not processed',
+    default: "Not processed",
     // enum: [
     //   CART_ITEM_STATUS.Not_processed,
     //   CART_ITEM_STATUS.Processing,
@@ -41,13 +41,13 @@ const CartItemSchema = new Schema({
   }
 });
 
-module.exports = Mongoose.model('CartItem', CartItemSchema);
+// module.exports = Mongoose.model('CartItem', CartItemSchema);
 
 // Cart Schema
 const CartSchema = new Schema({
   products: [CartItemSchema],
   user: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
   updated: Date,
